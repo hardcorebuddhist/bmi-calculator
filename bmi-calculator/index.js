@@ -27,6 +27,7 @@ if (process.argv.length !== 7) {
 process.exit();
 }
 
+// Check if weight OR height OR age is not a number (NaN)
 if (isNaN(weightInKg) || isNaN(heightInM) || isNaN(age)) {
     console.log(`
     Please make sure weight, height and age are numbers:
@@ -37,21 +38,33 @@ if (isNaN(weightInKg) || isNaN(heightInM) || isNaN(age)) {
 
     $ node index.js 82 1.79 32 yes m
   `);
-
-  process.exit();
-
+process.exit();
 }
 
+// Check if weight is lower than 30kg OR higher than 300kg
+if (weightInKg < 30 || weightInKg > 300) {
+console.log(`
+Please provide a number of weight in kilograms between 30 and 300
+You entered ${weightInKg}
+$ node index.js 82 1.79 32 yes m
+`);
+process.exit();
+} 
+
+// Check if user is above 20 years
 if (age < 20) {
     console.log('This app only works for users over 20');
     process.exit();
 }
 
+// Check if daily exercises were matched as "yes" or "no"
 if (dailyExercise !== "yes" && dailyExercise !== "no") {
-    console.log('The value for dailyExercise should be either "yes" or "no"')
+    console.log(`
+    The value for daily exercise should be either "yes" or "no"
+    You entered: ${dailyExercise}
+    `);
     process.exit();
 }
-
 
 // The formula for BMI is: weight (kg) / (height (m) x height (m))
 const BMI = weightInKg / heightInM * heightInM
